@@ -24,7 +24,6 @@ const splitLink = split(
   wsLink,
   authLink.concat(httpLink)
 );
-
 export const client = new ApolloClient({
   link: splitLink,
   cache: new InMemoryCache({

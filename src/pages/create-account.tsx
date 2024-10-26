@@ -7,7 +7,7 @@ import nuberLogo from "../images/nuber.svg";
 import { Button } from "../components/button";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { CreateAccountMutation, CreateAccountMutationVariables, UserRole } from "../__generated__/graphql";
+import { CreateAccountMutation, UserRole } from "../__generated__/graphql";
 
 const CREATE_ACCOUNT_MUTATION = gql(`
   mutation createAccount($email: String!, $password: String!, $role: UserRole!) {
@@ -44,10 +44,7 @@ export const CreateAccount = () => {
     }
   };
 
-  const [createAccountMutation, { loading, data: createAccountMutationResult }] = useMutation<
-    CreateAccountMutation,
-    CreateAccountMutationVariables
-  >(CREATE_ACCOUNT_MUTATION);
+  const [createAccountMutation, { loading, data: createAccountMutationResult }] = useMutation(CREATE_ACCOUNT_MUTATION);
 
   const onSubmit = () => {
     if (!loading) {
@@ -55,7 +52,6 @@ export const CreateAccount = () => {
       createAccountMutation({ variables: { email, password, role }, onCompleted });
     }
   };
-  console.log(watch());
 
   return (
     <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
