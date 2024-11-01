@@ -9,7 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { CreateAccountMutation, UserRole } from "../__generated__/graphql";
 
-const CREATE_ACCOUNT_MUTATION = gql(`
+export const CREATE_ACCOUNT_MUTATION = gql(`
   mutation createAccount($email: String!, $password: String!, $role: UserRole!) {
     createAccount(email: $email, password: $password, role: $role) {
       ok
@@ -28,10 +28,13 @@ export const CreateAccount = () => {
   const {
     register,
     getValues,
-    watch,
     formState: { errors, isValid },
     handleSubmit,
-  } = useForm<ICreateAccountForm>({ reValidateMode: "onBlur", defaultValues: { role: UserRole.Client } });
+  } = useForm<ICreateAccountForm>({
+    mode: "onTouched",
+    reValidateMode: "onBlur",
+    defaultValues: { role: UserRole.Client },
+  });
 
   const history = useHistory();
   const onCompleted = (data: CreateAccountMutation) => {
@@ -83,7 +86,6 @@ export const CreateAccount = () => {
             className="input"
           />
           {errors.password?.message && <FormError errorMessage={errors.password.message} />}
-          {errors.password?.type === "minLength" && <FormError errorMessage="Password must be more than 10 chars" />}
           <select className="input" {...register("role", { required: true })}>
             {Object.keys(UserRole).map((role, index) => (
               <option key={index}>{role}</option>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Redirect, Route, BrowserRouter as Router, Switch, useLocation } from "react-router-dom";
 import { Restaurants } from "../pages/client/restaurants";
 import { Header } from "../components/header";
 import { useMe } from "../hooks/useMe";

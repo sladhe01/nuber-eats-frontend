@@ -1,10 +1,11 @@
 import React from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { gql, useFragment } from "../../__generated__";
 import { useQuery } from "@apollo/client";
 import { RESTAURANT_FRAGMENT } from "../../fragments";
+import { Helmet } from "react-helmet-async";
 
-const RESTAURANT_QUERY = gql(`
+export const RESTAURANT_QUERY = gql(`
   query restaurant ($restaurantId: Int!) {
     restaurant (restaurantId: $restaurantId) {
       ok
@@ -22,11 +23,14 @@ interface IRestaurantParams {
 
 export const RestaurantDetail = () => {
   const params = useParams<IRestaurantParams>();
-  const { data, loading } = useQuery(RESTAURANT_QUERY, { variables: { restaurantId: +params.id } });
+  const { data } = useQuery(RESTAURANT_QUERY, { variables: { restaurantId: +params.id } });
   const restaurant = useFragment(RESTAURANT_FRAGMENT, data?.restaurant.restaurant);
 
   return (
     <div>
+      <Helmet>
+        <title>Restaurant | Nuber Eats</title>
+      </Helmet>
       <div className="py-40 bg-center bg-cover" style={{ backgroundImage: `url(${restaurant?.coverImg})` }}>
         <div className=" bg-white w-3/12 py-8 pl-20">
           <h4 className="text-4xl mb-3">{restaurant?.name}</h4>
