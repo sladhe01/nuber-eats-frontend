@@ -545,6 +545,40 @@ video {
   display: none;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .input {
   border-width: 2px;
   --tw-border-opacity: 1;
@@ -575,6 +609,10 @@ video {
 
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .mb-3 {
@@ -613,10 +651,6 @@ video {
   margin-top: 2rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
 .flex {
   display: flex;
 }
@@ -637,6 +671,10 @@ video {
   width: 4rem;
 }
 
+.w-3\/12 {
+  width: 25%;
+}
+
 .w-3\/4 {
   width: 75%;
 }
@@ -653,10 +691,6 @@ video {
   width: 100%;
 }
 
-.w-3\/12 {
-  width: 25%;
-}
-
 .max-w-3xl {
   max-width: 48rem;
 }
@@ -671,10 +705,6 @@ video {
 
 .max-w-screen-sm {
   max-width: 640px;
-}
-
-.max-w-2xl {
-  max-width: 42rem;
 }
 
 .cursor-pointer {
@@ -715,10 +745,6 @@ video {
 
 .gap-y-10 {
   row-gap: 2.5rem;
-}
-
-.overflow-y-scroll {
-  overflow-y: scroll;
 }
 
 .rounded-full {
@@ -813,36 +839,8 @@ video {
   padding-bottom: 5rem;
 }
 
-.pl-48 {
-  padding-left: 12rem;
-}
-
-.pl-8 {
-  padding-left: 2rem;
-}
-
-.pl-12 {
-  padding-left: 3rem;
-}
-
-.pl-16 {
-  padding-left: 4rem;
-}
-
 .pl-20 {
   padding-left: 5rem;
-}
-
-.pl-32 {
-  padding-left: 8rem;
-}
-
-.pl-28 {
-  padding-left: 7rem;
-}
-
-.pl-24 {
-  padding-left: 6rem;
 }
 
 .text-left {
@@ -861,6 +859,11 @@ video {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-base {
@@ -888,14 +891,8 @@ video {
   line-height: 1rem;
 }
 
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
-}
-
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.font-light {
+  font-weight: 300;
 }
 
 .font-medium {
@@ -904,10 +901,6 @@ video {
 
 .font-semibold {
   font-weight: 600;
-}
-
-.font-light {
-  font-weight: 300;
 }
 
 .tracking-wide {
@@ -958,10 +951,6 @@ video {
 }
 
 .hover\:opacity-50:hover {
-  opacity: 0.5;
-}
-
-.focus\:opacity-50:focus {
   opacity: 0.5;
 }
 

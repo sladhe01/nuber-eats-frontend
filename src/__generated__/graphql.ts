@@ -18,6 +18,26 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AllCategoriesOutput = {
+  __typename?: 'AllCategoriesOutput';
+  categories?: Maybe<Array<Category>>;
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type Category = {
+  __typename?: 'Category';
+  coverImg: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  id: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  restaurantCount: Scalars['Int']['output'];
+  restaurants?: Maybe<Array<Restaurant>>;
+  slug: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type CategoryInputType = {
   coverImg: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -25,15 +45,48 @@ export type CategoryInputType = {
   slug: Scalars['String']['input'];
 };
 
+export type CategoryOutput = {
+  __typename?: 'CategoryOutput';
+  category?: Maybe<Category>;
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  restaurants?: Maybe<Array<Restaurant>>;
+  totalPages?: Maybe<Scalars['Int']['output']>;
+  totalResults?: Maybe<Scalars['Int']['output']>;
+};
+
 export type ChoiceInputType = {
   extra?: Scalars['Int']['input'];
   name: Scalars['String']['input'];
+};
+
+export type CommonPayment = {
+  __typename?: 'CommonPayment';
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  id: Scalars['Float']['output'];
+  naverPayPayment: NaverPayment;
+  paddlePayment: PaddlePayment;
+  updatedAt: Scalars['DateTime']['output'];
+  user?: Maybe<User>;
 };
 
 export type CommonPaymentInputType = {
   naverPayPayment: NapyInputType;
   paddlePayment: PaddleInputType;
   user?: InputMaybe<UserInputType>;
+};
+
+export type CreateAccountOutput = {
+  __typename?: 'CreateAccountOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type CreateDishOutput = {
+  __typename?: 'CreateDishOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
 };
 
 export type CreateOrderItem = {
@@ -46,6 +99,56 @@ export type CreateOrderItemOption = {
   name: Scalars['String']['input'];
 };
 
+export type CreateOrderOutput = {
+  __typename?: 'CreateOrderOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type CreateRestaurantOutput = {
+  __typename?: 'CreateRestaurantOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type CreateRestaurantPaymentOutput = {
+  __typename?: 'CreateRestaurantPaymentOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type DeleteDishOutput = {
+  __typename?: 'DeleteDishOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type DeleteRestaurantOutput = {
+  __typename?: 'DeleteRestaurantOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type Dish = {
+  __typename?: 'Dish';
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  name: Scalars['String']['output'];
+  options?: Maybe<Array<DishOption>>;
+  photo?: Maybe<Scalars['String']['output']>;
+  price: Scalars['Int']['output'];
+  restaurant: Restaurant;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type DishChoice = {
+  __typename?: 'DishChoice';
+  extra: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type DishInputType = {
   description: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -55,6 +158,14 @@ export type DishInputType = {
   restaurant: RestaurantInputType;
 };
 
+export type DishOption = {
+  __typename?: 'DishOption';
+  allowMultipleChoices: Scalars['Boolean']['output'];
+  choices: Array<DishChoice>;
+  name: Scalars['String']['output'];
+  required: Scalars['Boolean']['output'];
+};
+
 export type DishOptionInputType = {
   allowMultipleChoices: Scalars['Boolean']['input'];
   choices: Array<ChoiceInputType>;
@@ -62,8 +173,201 @@ export type DishOptionInputType = {
   required: Scalars['Boolean']['input'];
 };
 
+export type EditDishOutput = {
+  __typename?: 'EditDishOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type EditOrderOutput = {
+  __typename?: 'EditOrderOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type EditProfileOutput = {
+  __typename?: 'EditProfileOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type EditRestaurantOutput = {
+  __typename?: 'EditRestaurantOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type GetOrderOutput = {
+  __typename?: 'GetOrderOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  order?: Maybe<Order>;
+};
+
+export type GetOrdersOutput = {
+  __typename?: 'GetOrdersOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  orders?: Maybe<Array<Order>>;
+  totalPages?: Maybe<Scalars['Int']['output']>;
+  totalResults?: Maybe<Scalars['Int']['output']>;
+};
+
+export type GetRestaurantPaymentsOutput = {
+  __typename?: 'GetRestaurantPaymentsOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  payments?: Maybe<Array<CommonPayment>>;
+  totalPages?: Maybe<Scalars['Int']['output']>;
+  totalResults?: Maybe<Scalars['Int']['output']>;
+};
+
+export type LoginOutput = {
+  __typename?: 'LoginOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  token?: Maybe<Scalars['String']['output']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createAccount: CreateAccountOutput;
+  createDish: CreateDishOutput;
+  createOrder: CreateOrderOutput;
+  createRestaurant: CreateRestaurantOutput;
+  createRestaurantPayment: CreateRestaurantPaymentOutput;
+  deleteDish: DeleteDishOutput;
+  deleteRestaurant: DeleteRestaurantOutput;
+  editDish: EditDishOutput;
+  editOrder: EditOrderOutput;
+  editProfile: EditProfileOutput;
+  editRestaurant: EditRestaurantOutput;
+  login: LoginOutput;
+  takeOrder: TakeOrderOutput;
+  verifyEmail: VerifyEmailOutput;
+};
+
+
+export type MutationCreateAccountArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  role: UserRole;
+};
+
+
+export type MutationCreateDishArgs = {
+  description: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  options?: InputMaybe<Array<DishOptionInputType>>;
+  photo?: InputMaybe<Scalars['String']['input']>;
+  price: Scalars['Int']['input'];
+  restaurantId: Scalars['Int']['input'];
+};
+
+
+export type MutationCreateOrderArgs = {
+  destination?: InputMaybe<Scalars['String']['input']>;
+  items: Array<CreateOrderItem>;
+  restaurantId: Scalars['Int']['input'];
+};
+
+
+export type MutationCreateRestaurantArgs = {
+  address: Scalars['String']['input'];
+  categoryName: Scalars['String']['input'];
+  coverImg: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
+
+export type MutationCreateRestaurantPaymentArgs = {
+  restaurantId?: InputMaybe<Scalars['Int']['input']>;
+  transactionId: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteDishArgs = {
+  dishId: Scalars['Int']['input'];
+};
+
+
+export type MutationDeleteRestaurantArgs = {
+  restaurantId: Scalars['Float']['input'];
+};
+
+
+export type MutationEditDishArgs = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  dishId: Scalars['Int']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+  options?: InputMaybe<Array<DishOptionInputType>>;
+  photo?: InputMaybe<Scalars['String']['input']>;
+  price?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type MutationEditOrderArgs = {
+  id: Scalars['Float']['input'];
+  status: OrderStatus;
+};
+
+
+export type MutationEditProfileArgs = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationEditRestaurantArgs = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
+  coverImg?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  restaurantId: Scalars['Float']['input'];
+};
+
+
+export type MutationLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+
+export type MutationTakeOrderArgs = {
+  id: Scalars['Float']['input'];
+};
+
+
+export type MutationVerifyEmailArgs = {
+  code: Scalars['String']['input'];
+};
+
 export type NapyInputType = {
   paymentId: Scalars['String']['input'];
+};
+
+export type NaverPayment = {
+  __typename?: 'NaverPayment';
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  id: Scalars['Float']['output'];
+  paymentId: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type Order = {
+  __typename?: 'Order';
+  createdAt: Scalars['DateTime']['output'];
+  customer?: Maybe<User>;
+  deletedAt: Scalars['DateTime']['output'];
+  destination?: Maybe<Scalars['String']['output']>;
+  driver?: Maybe<User>;
+  id: Scalars['Float']['output'];
+  items: Array<OrderItem>;
+  restaurant: Restaurant;
+  status: OrderStatus;
+  total?: Maybe<Scalars['Float']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
 };
 
 export type OrderInputType = {
@@ -76,9 +380,25 @@ export type OrderInputType = {
   total?: InputMaybe<Scalars['Float']['input']>;
 };
 
+export type OrderItem = {
+  __typename?: 'OrderItem';
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  dish: Dish;
+  id: Scalars['Float']['output'];
+  options?: Maybe<Array<OrderItemOption>>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type OrderItemInputType = {
   dish: DishInputType;
   options?: InputMaybe<Array<OrderItemOptionInputType>>;
+};
+
+export type OrderItemOption = {
+  __typename?: 'OrderItemOption';
+  choices: Array<DishChoice>;
+  name: Scalars['String']['output'];
 };
 
 export type OrderItemOptionInputType = {
@@ -101,6 +421,96 @@ export type PaddleInputType = {
   transactionId: Scalars['String']['input'];
 };
 
+export type PaddlePayment = {
+  __typename?: 'PaddlePayment';
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  id: Scalars['Float']['output'];
+  restaurant?: Maybe<Restaurant>;
+  restaurantId?: Maybe<Scalars['Int']['output']>;
+  transactionId: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  allCategories: AllCategoriesOutput;
+  category: CategoryOutput;
+  getOrder: GetOrderOutput;
+  getOrders: GetOrdersOutput;
+  getRestaurantPayments: GetRestaurantPaymentsOutput;
+  me: User;
+  restaurant: RestaurantOutput;
+  restaurants: RestaurantsOutput;
+  searchRestaurant: SearchRestaurantOutput;
+  userProfile: UserProfileOutput;
+};
+
+
+export type QueryCategoryArgs = {
+  page?: Scalars['Int']['input'];
+  slug: Scalars['String']['input'];
+  take?: Scalars['Int']['input'];
+};
+
+
+export type QueryGetOrderArgs = {
+  id: Scalars['Float']['input'];
+};
+
+
+export type QueryGetOrdersArgs = {
+  page?: Scalars['Int']['input'];
+  status?: InputMaybe<OrderStatus>;
+  take?: Scalars['Int']['input'];
+};
+
+
+export type QueryGetRestaurantPaymentsArgs = {
+  page?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+};
+
+
+export type QueryRestaurantArgs = {
+  restaurantId: Scalars['Int']['input'];
+};
+
+
+export type QueryRestaurantsArgs = {
+  page?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+};
+
+
+export type QuerySearchRestaurantArgs = {
+  page?: Scalars['Int']['input'];
+  query: Scalars['String']['input'];
+  take?: Scalars['Int']['input'];
+};
+
+
+export type QueryUserProfileArgs = {
+  userId: Scalars['Float']['input'];
+};
+
+export type Restaurant = {
+  __typename?: 'Restaurant';
+  address: Scalars['String']['output'];
+  category: Category;
+  coverImg: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  id: Scalars['Float']['output'];
+  isPromoted: Scalars['Boolean']['output'];
+  menu?: Maybe<Array<Dish>>;
+  name: Scalars['String']['output'];
+  orders: Array<Order>;
+  owner: User;
+  promotedUntil?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt: Scalars['DateTime']['output'];
+};
+
 export type RestaurantInputType = {
   address: Scalars['String']['input'];
   category: CategoryInputType;
@@ -111,6 +521,65 @@ export type RestaurantInputType = {
   orders: Array<OrderInputType>;
   owner: UserInputType;
   promotedUntil?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type RestaurantOutput = {
+  __typename?: 'RestaurantOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  restaurant?: Maybe<Restaurant>;
+};
+
+export type RestaurantsOutput = {
+  __typename?: 'RestaurantsOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  results?: Maybe<Array<Restaurant>>;
+  totalPages?: Maybe<Scalars['Int']['output']>;
+  totalResults?: Maybe<Scalars['Int']['output']>;
+};
+
+export type SearchRestaurantOutput = {
+  __typename?: 'SearchRestaurantOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  restaurants?: Maybe<Array<Restaurant>>;
+  totalPages?: Maybe<Scalars['Int']['output']>;
+  totalResults?: Maybe<Scalars['Int']['output']>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  cookedOrders: Order;
+  orderUpdates: Order;
+  pendingOrders: Order;
+};
+
+
+export type SubscriptionOrderUpdatesArgs = {
+  id: Scalars['Float']['input'];
+};
+
+export type TakeOrderOutput = {
+  __typename?: 'TakeOrderOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
+
+export type User = {
+  __typename?: 'User';
+  createdAt: Scalars['DateTime']['output'];
+  deletedAt: Scalars['DateTime']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  orders: Array<Order>;
+  password: Scalars['String']['output'];
+  payments: Array<CommonPayment>;
+  restaurants?: Maybe<Array<Restaurant>>;
+  rides: Array<Order>;
+  role: UserRole;
+  updatedAt: Scalars['DateTime']['output'];
+  verified: Scalars['Boolean']['output'];
 };
 
 export type UserInputType = {
@@ -124,11 +593,24 @@ export type UserInputType = {
   verified?: Scalars['Boolean']['input'];
 };
 
+export type UserProfileOutput = {
+  __typename?: 'UserProfileOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+  user?: Maybe<User>;
+};
+
 export enum UserRole {
   Client = 'Client',
   Delivery = 'Delivery',
   Owner = 'Owner'
 }
+
+export type VerifyEmailOutput = {
+  __typename?: 'VerifyEmailOutput';
+  error?: Maybe<Scalars['String']['output']>;
+  ok: Scalars['Boolean']['output'];
+};
 
 export type RestaurantPartsFragment = { __typename?: 'Restaurant', id: number, name: string, coverImg: string, address: string, isPromoted: boolean, category: { __typename?: 'Category', name: string, slug: string } } & { ' $fragmentName'?: 'RestaurantPartsFragment' };
 

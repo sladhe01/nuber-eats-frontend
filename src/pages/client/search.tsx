@@ -7,7 +7,7 @@ import { RestaurantPartsFragment } from "../../__generated__/graphql";
 import { Restaurant } from "../../components/restaurant";
 import { RESTAURANT_FRAGMENT } from "../../fragments";
 
-const SEARCH_RESTAURANT = gql(`
+export const SEARCH_RESTAURANT = gql(`
   query searchRestaurant ($query: String!, $page: Int) {
     searchRestaurant (query:$query, page:$page) {
       ok

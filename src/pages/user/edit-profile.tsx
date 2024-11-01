@@ -7,8 +7,9 @@ import { useApolloClient, useMutation } from "@apollo/client";
 import { EditProfileMutation } from "../../__generated__/graphql";
 import { FormError } from "../../components/form-error";
 import { useHistory } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
-const EDIT_PROFILE_MUTATION = gql(`
+export const EDIT_PROFILE_MUTATION = gql(`
   mutation editProfile($email:String, $password:String) {
     editProfile(email: $email, password: $password) {
       ok
@@ -17,7 +18,7 @@ const EDIT_PROFILE_MUTATION = gql(`
   }
 `);
 
-const LOGIN_MUTATION = gql(`
+export const LOGIN_MUTATION = gql(`
   mutation logIn($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       ok
@@ -39,7 +40,7 @@ export const EditProfile = () => {
   const history = useHistory();
   const onCompleted = (data: EditProfileMutation) => {
     const {
-      editProfile: { ok, error },
+      editProfile: { ok },
     } = data;
     if (ok && userData) {
       const {
@@ -74,13 +75,13 @@ export const EditProfile = () => {
       const {
         me: { email: presentEmail },
       } = userData;
-      await login({ variables: { email: presentEmail, password: presentPassword } });
-      if (loginResult?.login.ok) {
+      const { data } = await login({ variables: { email: presentEmail, password: presentPassword } });
+      if (data?.login.ok) {
         //""->undefined로 바꿔주는 작업
         const { email, password } = Object.fromEntries(
           Object.entries(getValues()).filter(([_, value]) => value !== "")
         );
-        editProfile({ variables: { email, password } });
+        await editProfile({ variables: { email, password } });
       }
     }
   };
@@ -91,6 +92,9 @@ export const EditProfile = () => {
 
   return (
     <div className="h-screen mt-52 flex flex-col justify-center items-center">
+      <Helmet>
+        <title>Edit Profile | Nuber Eats</title>
+      </Helmet>
       <h4 className="font-semibold text-2xl mb-3">Edit Profile</h4>
       <form onSubmit={handleSubmit(onSubmit)} className="grid max-w-screen-sm gap-3 mt-5 w-full mb-5">
         <input

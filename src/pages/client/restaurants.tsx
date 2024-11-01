@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 import { CATEGORY_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import { CategoryPartsFragment, RestaurantPartsFragment } from "../../__generated__/graphql";
 
-const RESTAURANTS_QUERY = gql(`
+export const RESTAURANTS_QUERY = gql(`
   query restaurantsPage($page:Int) {
     allCategories {
       ok

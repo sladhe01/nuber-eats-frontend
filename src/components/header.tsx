@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 export const Header = () => {
   const { data } = useMe();
-
   return (
     <>
       {!data?.me.verified && (

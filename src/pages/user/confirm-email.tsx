@@ -6,7 +6,7 @@ import { useMe } from "../../hooks/useMe";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
-const VERIFY_EMAIL_MUTATION = gql(`
+export const VERIFY_EMAIL_MUTATION = gql(`
   mutation verifyEmail ($code:String!) {
     verifyEmail(code:$code) {
       ok
@@ -21,7 +21,7 @@ export const ConfirmEmail = () => {
   const history = useHistory();
   const onCompleted = (data: VerifyEmailMutation) => {
     const {
-      verifyEmail: { ok, error },
+      verifyEmail: { ok },
     } = data;
     if (ok && userData?.me) {
       client.writeFragment({
