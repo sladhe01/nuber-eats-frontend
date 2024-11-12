@@ -96,7 +96,7 @@ export const Login = () => {
         </form>
         <div>
           New to Nuber?{" "}
-          <Link to="/create-account" className="text-lime-600 hover:underline">
+          <Link to="/create-account" className="link">
             Create an Account
           </Link>
         </div>

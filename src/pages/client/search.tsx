@@ -50,12 +50,12 @@ export const Search = () => {
           <div className="h-screen flex flex-col justify-center items-center">
             <h2 className="font-semibold text-2xl mb-3">{`We didt't find a match for ${query}`}</h2>
             <h4 className="font-medium text-base mb-5">Try searching for something else instead</h4>
-            <Link className="hover:underline text-lime-600" to="/">
+            <Link className="link" to="/">
               View all &rarr;
             </Link>
           </div>
         ) : (
-          <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
+          <div className="container pb-20  mt-8">
             <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
               {restaurants?.map((restaurant: RestaurantPartsFragment) => {
                 return (

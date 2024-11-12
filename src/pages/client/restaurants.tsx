@@ -69,7 +69,7 @@ export const Restaurants = () => {
         />
       </form>
       {!loading && (
-        <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
+        <div className="container pb-20 mt-8">
           <div className="flex justify-around max-w-3xl mx-auto">
             {categories?.map((category: CategoryPartsFragment) => (
               <Link key={category.id} to={`/category/${category.slug}`}>

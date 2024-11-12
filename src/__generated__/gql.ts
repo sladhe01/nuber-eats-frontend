@@ -23,6 +23,9 @@ const documents = {
     "\n  query searchRestaurant ($query: String!, $page: Int) {\n    searchRestaurant (query:$query, page:$page) {\n      ok\n      error\n      totalPages\n      totalResults\n      restaurants {\n        ...RestaurantParts\n      }\n    }\n  }\n": types.SearchRestaurantDocument,
     "\n  mutation createAccount($email: String!, $password: String!, $role: UserRole!) {\n    createAccount(email: $email, password: $password, role: $role) {\n      ok\n      error\n    }\n  }\n": types.CreateAccountDocument,
     "\n  mutation logIn($email: String!, $password: String!) {\n    login(email: $email, password: $password) {\n      ok\n      error\n      token\n    }\n  }\n": types.LogInDocument,
+    "\n  mutation createRestaurant ( $name: String!, $coverImg: String!, $address: String!, $categoryName: String!) {\n    createRestaurant (name: $name, coverImg: $coverImg, address: $address, categoryName: $categoryName) {\n      ok\n      error\n    }\n  }\n": types.CreateRestaurantDocument,
+    "\n  query allCategories {\n    allCategories {\n      ok\n      error\n      categories {\n        id\n        name\n      }\n    }\n  }\n": types.AllCategoriesDocument,
+    "\n  query myRestaurants {\n    myRestaurants {\n      ok\n      error\n      restaurants {\n        ...RestaurantParts\n      }\n    }\n  }  \n": types.MyRestaurantsDocument,
     "\n  mutation verifyEmail ($code:String!) {\n    verifyEmail(code:$code) {\n      ok\n      error\n    }\n  }\n": types.VerifyEmailDocument,
     "\n        fragment VerifiedUser on User {verified}": types.VerifiedUserFragmentDoc,
     "\n  mutation editProfile($email:String, $password:String) {\n    editProfile(email: $email, password: $password) {\n      ok\n      error\n    }\n  }\n": types.EditProfileDocument,
@@ -79,6 +82,18 @@ export function gql(source: "\n  mutation createAccount($email: String!, $passwo
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation logIn($email: String!, $password: String!) {\n    login(email: $email, password: $password) {\n      ok\n      error\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation logIn($email: String!, $password: String!) {\n    login(email: $email, password: $password) {\n      ok\n      error\n      token\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation createRestaurant ( $name: String!, $coverImg: String!, $address: String!, $categoryName: String!) {\n    createRestaurant (name: $name, coverImg: $coverImg, address: $address, categoryName: $categoryName) {\n      ok\n      error\n    }\n  }\n"): (typeof documents)["\n  mutation createRestaurant ( $name: String!, $coverImg: String!, $address: String!, $categoryName: String!) {\n    createRestaurant (name: $name, coverImg: $coverImg, address: $address, categoryName: $categoryName) {\n      ok\n      error\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query allCategories {\n    allCategories {\n      ok\n      error\n      categories {\n        id\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query allCategories {\n    allCategories {\n      ok\n      error\n      categories {\n        id\n        name\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query myRestaurants {\n    myRestaurants {\n      ok\n      error\n      restaurants {\n        ...RestaurantParts\n      }\n    }\n  }  \n"): (typeof documents)["\n  query myRestaurants {\n    myRestaurants {\n      ok\n      error\n      restaurants {\n        ...RestaurantParts\n      }\n    }\n  }  \n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

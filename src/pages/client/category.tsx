@@ -46,7 +46,7 @@ export const Category = () => {
         <title>Category | Nuber Eats</title>
       </Helmet>
       {!loading && (
-        <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
+        <div className="container pb-20 mt-8">
           <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
             {restaurants?.map((restaurant: RestaurantPartsFragment) => {
               return (

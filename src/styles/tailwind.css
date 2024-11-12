@@ -3,4 +3,10 @@
 .input {
   @apply focus:outline-none focus:border-gray-500 p-3 border-2 text-lg border-gray-200 transition-colors;
 }
+.container {
+  @apply max-w-screen-2xl mx-auto w-full px-5 2xl:px-0;
+}
+.link {
+  @apply text-lime-600 hover:underline;
+}
 @tailwind utilities;
