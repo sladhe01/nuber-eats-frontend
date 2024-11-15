@@ -50,12 +50,12 @@ export const Search = () => {
           <div className="h-screen flex flex-col justify-center items-center">
             <h2 className="font-semibold text-2xl mb-3">{`We didt't find a match for ${query}`}</h2>
             <h4 className="font-medium text-base mb-5">Try searching for something else instead</h4>
-            <Link className="hover:underline text-lime-600" to="/">
+            <Link className="link" to="/">
               View all &rarr;
             </Link>
           </div>
         ) : (
-          <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
+          <div className="container pb-20  mt-8">
             <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
               {restaurants?.map((restaurant: RestaurantPartsFragment) => {
                 return (
@@ -71,7 +71,7 @@ export const Search = () => {
             </div>
             <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
               {page > 1 ? (
-                <button onClick={onPrevPageClick} className="ocus:outline-none font-medium text-2xl">
+                <button onClick={onPrevPageClick} className="focus:outline-none font-medium text-2xl">
                   &larr;
                 </button>
               ) : (

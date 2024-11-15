@@ -46,7 +46,7 @@ export const Category = () => {
         <title>Category | Nuber Eats</title>
       </Helmet>
       {!loading && (
-        <div className="max-w-screen-2xl pb-20 mx-auto mt-8">
+        <div className="container pb-20 mt-8">
           <div className="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
             {restaurants?.map((restaurant: RestaurantPartsFragment) => {
               return (
@@ -62,7 +62,7 @@ export const Category = () => {
           </div>
           <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
             {page > 1 ? (
-              <button onClick={onPrevPageClick} className="ocus:outline-none font-medium text-2xl">
+              <button onClick={onPrevPageClick} className="focus:outline-none font-medium text-2xl">
                 &larr;
               </button>
             ) : (
