@@ -92,7 +92,7 @@ export const Restaurants = () => {
           </div>
           <div className="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
             {page > 1 ? (
-              <button onClick={onPrevPageClick} className="ocus:outline-none font-medium text-2xl">
+              <button onClick={onPrevPageClick} className="focus:outline-none font-medium text-2xl">
                 &larr;
               </button>
             ) : (

@@ -13,6 +13,10 @@ import { Category } from "../pages/client/category";
 import { RestaurantDetail } from "../pages/client/restaurant";
 import { MyRestaurants } from "../pages/owner/my-restaurants";
 import { AddRestaurant } from "../pages/owner/add-restaurant";
+import { MyRestaurant } from "../pages/owner/my-restaurant";
+import { AddDish } from "../pages/owner/add-dish";
+import { Unauthorized } from "../pages/401";
+import { EditRestaurant } from "../pages/owner/edit-restaurant";
 
 const clientRoutes = [
   { path: "/", component: <Restaurants /> },
@@ -24,11 +28,15 @@ const clientRoutes = [
 const restaurantRoutes = [
   { path: "/", component: <MyRestaurants /> },
   { path: "/add-restaurant", component: <AddRestaurant /> },
+  { path: "/restaurants/:id", component: <MyRestaurant /> },
+  { path: "/restaurants/:id/edit-restaurant", component: <EditRestaurant /> },
+  { path: "/restaurants/:restaurantId/add-dish", component: <AddDish /> },
 ];
 
 const commonRoutes = [
   { path: "/confirm", component: <ConfirmEmail /> },
   { path: "/edit-profile", component: <EditProfile /> },
+  { path: "/unauthorized", component: <Unauthorized /> },
 ];
 
 export const LoggedInRouter = () => {

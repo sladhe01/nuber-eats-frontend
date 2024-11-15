@@ -39,7 +39,7 @@ export const CreateAccount = () => {
   const history = useHistory();
   const onCompleted = (data: CreateAccountMutation) => {
     const {
-      createAccount: { ok, error },
+      createAccount: { ok },
     } = data;
     if (ok) {
       alert("Account created! Log in now!");
@@ -63,7 +63,7 @@ export const CreateAccount = () => {
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <img src={nuberLogo} className="w-52 mb-5" />
-        <h4 className="text-left font-medium w-full text-3xl my-5">Let's get started</h4>
+        <h4 className="text-center font-medium w-full text-3xl my-5">Let's get started</h4>
         <form onSubmit={handleSubmit(onSubmit)} className="grid gap-3  mt-5 w-full mb-3">
           <input
             {...register("email", {
