@@ -4,7 +4,7 @@ import { gql, useFragment } from "../../__generated__";
 import { useQuery } from "@apollo/client";
 import { RESTAURANT_FRAGMENT } from "../../fragments";
 
-const MY_RESTAURANT = gql(`
+export const MY_RESTAURANT = gql(`
   query myRestaurant ($id: Float!) {
     myRestaurant (id: $id) {
       ok
