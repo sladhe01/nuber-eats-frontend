@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { gql, useFragment } from "../../__generated__";
+import { gql, getFragmentData } from "../../__generated__";
 import { useQuery } from "@apollo/client";
 import { RESTAURANT_FRAGMENT } from "../../fragments";
 import { Helmet } from "react-helmet-async";
@@ -24,7 +24,7 @@ interface IRestaurantParams {
 export const RestaurantDetail = () => {
   const params = useParams<IRestaurantParams>();
   const { data } = useQuery(RESTAURANT_QUERY, { variables: { restaurantId: +params.id } });
-  const restaurant = useFragment(RESTAURANT_FRAGMENT, data?.restaurant.restaurant);
+  const restaurant = getFragmentData(RESTAURANT_FRAGMENT, data?.restaurant.restaurant);
 
   return (
     <div>
