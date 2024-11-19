@@ -167,7 +167,7 @@ export const EditDish = () => {
   const {
     register,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors, isValid, dirtyFields, touchedFields },
     handleSubmit,
     control,
     reset,
@@ -351,7 +351,11 @@ export const EditDish = () => {
           />
         </label>
         {errors.file?.message && <FormError errorMessage={errors.file.message} />}
-        <Button loading={loading} canClick={isValid} actionText="Edit Dish" />
+        <Button
+          loading={loading}
+          canClick={isValid && (Object.keys(touchedFields).length > 0 || fileChanged)}
+          actionText="Edit Dish"
+        />
       </form>
     </div>
   );
