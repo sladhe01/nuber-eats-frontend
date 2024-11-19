@@ -17,6 +17,7 @@ import { MyRestaurant } from "../pages/owner/my-restaurant";
 import { AddDish } from "../pages/owner/add-dish";
 import { Unauthorized } from "../pages/401";
 import { EditRestaurant } from "../pages/owner/edit-restaurant";
+import { EditDish } from "../pages/owner/edit-dish";
 
 const clientRoutes = [
   { path: "/", component: <Restaurants /> },
@@ -31,6 +32,7 @@ const restaurantRoutes = [
   { path: "/restaurants/:id", component: <MyRestaurant /> },
   { path: "/restaurants/:id/edit-restaurant", component: <EditRestaurant /> },
   { path: "/restaurants/:restaurantId/add-dish", component: <AddDish /> },
+  { path: "/restaurants/:restaurantId/edit-dish/:dishId", component: <EditDish /> },
 ];
 
 const commonRoutes = [

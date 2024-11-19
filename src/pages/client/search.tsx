@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { gql, useFragment } from "../../__generated__";
+import { gql, getFragmentData } from "../../__generated__";
 import { useLazyQuery } from "@apollo/client";
 import { RestaurantPartsFragment } from "../../__generated__/graphql";
 import { Restaurant } from "../../components/restaurant";
@@ -32,7 +32,7 @@ export const Search = () => {
   const onPrevPageClick = () => {
     setPage((current) => current - 1);
   };
-  const restaurants = useFragment(RESTAURANT_FRAGMENT, data?.searchRestaurant.restaurants);
+  const restaurants = getFragmentData(RESTAURANT_FRAGMENT, data?.searchRestaurant.restaurants);
   const query = location.search.split("?term=")[1];
   useEffect(() => {
     if (!query) {

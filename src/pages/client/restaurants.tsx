@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { gql, useFragment } from "../../__generated__";
+import { gql, getFragmentData } from "../../__generated__";
 import { useQuery } from "@apollo/client";
 import { Restaurant } from "../../components/restaurant";
 import { CategoryIcon } from "../../components/category-icon";
@@ -49,8 +49,8 @@ export const Restaurants = () => {
     const searchTerm = getValues("searchTerm");
     history.push({ pathname: "/search", search: `?term=${searchTerm}` });
   };
-  const categories = useFragment(CATEGORY_FRAGMENT, data?.allCategories.categories);
-  const results = useFragment(RESTAURANT_FRAGMENT, data?.restaurants.results);
+  const categories = getFragmentData(CATEGORY_FRAGMENT, data?.allCategories.categories);
+  const results = getFragmentData(RESTAURANT_FRAGMENT, data?.restaurants.results);
 
   return (
     <div className="h-screen">

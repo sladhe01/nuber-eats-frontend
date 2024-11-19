@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { gql, useFragment } from "../../__generated__";
+import { gql, getFragmentData } from "../../__generated__";
 import { useQuery } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
 import { RESTAURANT_FRAGMENT } from "../../fragments";
@@ -32,7 +32,7 @@ export const Category = () => {
   const params = useParams<ICategoryParams>();
   const [page, setPage] = useState(1);
   const { data, loading } = useQuery(CATEGORY_QUERY, { variables: { slug: params.slug, page: page } });
-  const restaurants = useFragment(RESTAURANT_FRAGMENT, data?.category.restaurants);
+  const restaurants = getFragmentData(RESTAURANT_FRAGMENT, data?.category.restaurants);
   const onNextPageClick = () => {
     setPage((current) => current + 1);
   };
