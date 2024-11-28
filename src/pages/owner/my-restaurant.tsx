@@ -1,19 +1,13 @@
 import React from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { gql, getFragmentData } from "../../__generated__";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { DISH_FRAGMENT, ORDER_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import { Dish } from "../../components/dish";
-import {
-  VictoryAxis,
-  VictoryBar,
-  VictoryChart,
-  VictoryLabel,
-  VictoryLine,
-  VictoryTheme,
-  VictoryTooltip,
-  VictoryVoronoiContainer,
-} from "victory";
+import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLine, VictoryTheme, VictoryVoronoiContainer } from "victory";
+import { Helmet } from "react-helmet-async";
+import { useMe } from "../../hooks/useMe";
+import { CreateRestaurantPaymentMutation } from "../../__generated__/graphql";
 
 export const MY_RESTAURANT = gql(`
   query myRestaurant ($id: Float!) {
@@ -21,6 +15,7 @@ export const MY_RESTAURANT = gql(`
       ok
       error
       restaurant {
+        name
         ...RestaurantParts
         menu {
           ...DishParts
@@ -32,8 +27,34 @@ export const MY_RESTAURANT = gql(`
     }
   }`);
 
+export const CREATE_RESTAURANT_PAYMENT = gql(`
+ mutation createRestaurantPayment ($transactionId: String!, $restaurantId: Int) {
+  createRestaurantPayment (transactionId: $transactionId, restaurantId: $restaurantId) {
+    ok
+    error
+  }
+ }  
+`);
+
 interface IParams {
   id: string;
+}
+
+interface IeventData {
+  name: string;
+  data: {
+    id: string;
+    transaction_id: string;
+    status: string;
+    custom_data: string;
+    currency_code: string;
+    custumer: {};
+    items: [{}];
+    recurring_totals: {};
+    pyment: {};
+    settings: {};
+    discount: {} | null;
+  };
 }
 
 export const MyRestaurant = () => {
@@ -46,9 +67,42 @@ export const MyRestaurant = () => {
   if (data?.myRestaurant.error === "You can't access") {
     history.push("/unauthorized");
   }
+  const { data: userData } = useMe();
+  const onCompleted = (data: CreateRestaurantPaymentMutation) => {
+    if (data.createRestaurantPayment.ok) {
+      alert("Your restaurant is being promoted");
+    }
+  };
+  const [createRestaurantPaymentMutation] = useMutation(CREATE_RESTAURANT_PAYMENT, { onCompleted });
+  const triggerPayment = () => {
+    if (userData) {
+      //@ts-ignore
+      window.Paddle.Environment.set("sandbox");
+      //@ts-ignore
+      window.Paddle.Initialize({
+        token: "test_3fc69a9172a7c668639d347b515",
+        eventCallback: function (event: IeventData) {
+          if (event.name === "checkout.completed") {
+            createRestaurantPaymentMutation({
+              variables: { transactionId: event.data.transaction_id, restaurantId: +id },
+            });
+          }
+        },
+      });
+      //@ts-ignore
+      window.Paddle.Checkout.open({
+        items: [{ priceId: "pri_01jdsc3k5yqjs33b5rsyvexgza" }],
+        customer: { email: userData.me.email },
+      });
+    }
+  };
 
   return (
     <div>
+      <Helmet>
+        <title>{`${data?.myRestaurant.restaurant?.name} | Nuber Eats` || "Loading..."}</title>
+        <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+      </Helmet>
       <div
         className="bg-gray-700 py-28 bg-center bg-cover"
         style={{ backgroundImage: `url(${restaurant?.coverImg})` }}
@@ -59,9 +113,9 @@ export const MyRestaurant = () => {
           <Link to={`/restaurants/${id}/add-dish`} className="mr-8 text-white bg-gray-800 py-3 px-10">
             Add Dish &rarr;
           </Link>
-          <Link to={``} className="text-white bg-lime-700 py-3 px-10">
+          <span onClick={triggerPayment} className="text-white bg-lime-700 py-3 px-10 cursor-pointer">
             Buy Promotion &rarr;
-          </Link>
+          </span>
           <Link to={`/restaurants/${id}/edit-restaurant`} className="text-white bg-gray-800 py-3 px-10 ml-auto">
             Edit Restaurant &rarr;
           </Link>
@@ -105,7 +159,7 @@ export const MyRestaurant = () => {
               <VictoryAxis
                 tickLabelComponent={<VictoryLabel renderInPortal />}
                 style={{ tickLabels: { fontSize: 20, angle: 45 } }}
-                tickFormat={(tick) => new Date(tick).toLocaleDateString("ko")}
+                tickFormat={(tick: any) => new Date(tick).toLocaleDateString("ko")}
                 label="Days"
               />
             </VictoryChart>
