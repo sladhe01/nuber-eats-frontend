@@ -810,14 +810,6 @@ video {
   max-width: 640px;
 }
 
-.max-w-sm {
-  max-width: 24rem;
-}
-
-.max-w-lg {
-  max-width: 32rem;
-}
-
 .basis-1\/4 {
   flex-basis: 25%;
 }
