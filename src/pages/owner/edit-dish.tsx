@@ -252,7 +252,12 @@ export const EditDish = () => {
     } catch (error) {}
   };
   const onAddOptionClick = () => {
-    append({ name: "", required: false, allowMultipleChoices: false, choices: [] });
+    append({
+      name: "",
+      required: false,
+      allowMultipleChoices: false,
+      choices: [],
+    });
   };
 
   return (
@@ -329,7 +334,7 @@ export const EditDish = () => {
                 control={control}
                 register={register}
                 errors={errors}
-                initialChoices={dish?.options?.[index].choices}
+                initialChoices={dish?.options?.[index]?.choices}
               />
             </div>
           ))}

@@ -80,7 +80,7 @@ export const MyRestaurant = () => {
       window.Paddle.Environment.set("sandbox");
       //@ts-ignore
       window.Paddle.Initialize({
-        token: "test_3fc69a9172a7c668639d347b515",
+        token: process.env.REACT_APP_PADDLE_TOKEN,
         eventCallback: function (event: IeventData) {
           if (event.name === "checkout.completed") {
             createRestaurantPaymentMutation({
@@ -91,7 +91,7 @@ export const MyRestaurant = () => {
       });
       //@ts-ignore
       window.Paddle.Checkout.open({
-        items: [{ priceId: "pri_01jdsc3k5yqjs33b5rsyvexgza" }],
+        items: [{ priceId: process.env.REACT_APP_PADDLE_PROMOTION_PRODUCT_ID }],
         customer: { email: userData.me.email },
       });
     }
@@ -134,6 +134,7 @@ export const MyRestaurant = () => {
                   photo={dish.photo}
                   restaurantId={id}
                   dishId={dish.id}
+                  role="Owner"
                 />
               ))}
             </div>
