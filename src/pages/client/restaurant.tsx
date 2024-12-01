@@ -6,7 +6,9 @@ import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import { Helmet } from "react-helmet-async";
 import { Dish } from "../../components/dish";
 import { OptionModal } from "../../components/OptionModal";
-import { DishPartsFragment } from "../../__generated__/graphql";
+import { DishPartsFragment, DishChoice } from "../../__generated__/graphql";
+import { useForm } from "react-hook-form";
+import { CheckoutModal } from "../../components/CheckoutModal";
 
 export const RESTAURANT_QUERY = gql(`
   query restaurant ($restaurantId: Int!) {
@@ -27,38 +29,60 @@ interface IRestaurantParams {
   id: string;
 }
 
+export interface IFormOrderItem {
+  optionIndex_choiceIndex?: string[];
+}
+
+export interface IOption {
+  name: string;
+  choices?: DishChoice[];
+}
+
+export interface IOrderItem {
+  dish: DishPartsFragment | undefined;
+  options?: IOption[];
+}
+
 export const RestaurantDetail = () => {
   const params = useParams<IRestaurantParams>();
   const { data } = useQuery(RESTAURANT_QUERY, { variables: { restaurantId: +params.id } });
   const restaurant = getFragmentData(RESTAURANT_FRAGMENT, data?.restaurant.restaurant);
   const menu = getFragmentData(DISH_FRAGMENT, data?.restaurant?.restaurant?.menu);
-  const [isVisible, setIsVisible] = useState(false);
-  const [orderItems, setOrderItems] = useState<[]>([]);
+  const [isOptionModalVisible, setIsOptionModalVisible] = useState(false);
+  const [isCheckoutModalVisible, setIsCheckoutModalVisible] = useState(false);
+  const [orderItems, setOrderItems] = useState<IOrderItem[]>([]);
   const [selectedDish, setSelectedDish] = useState<DishPartsFragment | undefined>();
   const openOptionModal = (dish: DishPartsFragment) => {
     setSelectedDish(dish);
-    setIsVisible(true);
+    setIsOptionModalVisible(true);
   };
   const closeOptionModal = () => {
     setSelectedDish(undefined);
-    setIsVisible(false);
+    setIsOptionModalVisible(false);
   };
-  const triggerCheckoutOrder = () => {
-    //todo
+  const openCheckoutModal = () => {
+    setIsCheckoutModalVisible(true);
   };
+  const closeCheckoutModal = () => {
+    setIsCheckoutModalVisible(false);
+  };
+  const { register, handleSubmit, getValues, reset } = useForm<IFormOrderItem>({ mode: "onTouched" });
 
   useEffect(() => {
-    if (isVisible) {
-      console.log("add");
+    if (isOptionModalVisible) {
       document.body.classList.add("overflow-hidden");
     } else {
-      console.log("delete");
       document.body.classList.remove("overflow-hidden");
     }
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
-  }, [isVisible]);
+  }, [isOptionModalVisible]);
+
+  //테스트용
+  useEffect(() => {
+    console.log(orderItems);
+  }, [orderItems]);
 
   return (
     <div>
@@ -66,11 +90,20 @@ export const RestaurantDetail = () => {
         <title>Restaurant | Nuber Eats</title>
       </Helmet>
       <OptionModal
-        isVisible={isVisible}
+        isVisible={isOptionModalVisible}
         dish={selectedDish}
-        orderItems={orderItems}
         setOrderItems={setOrderItems}
         onClose={closeOptionModal}
+        register={register}
+        getValues={getValues}
+        handleSubmit={handleSubmit}
+        reset={reset}
+      />
+      <CheckoutModal
+        isVisible={isCheckoutModalVisible}
+        onClose={closeCheckoutModal}
+        orderItems={orderItems}
+        setOrderItems={setOrderItems}
       />
       <div className="py-40 bg-center bg-cover" style={{ backgroundImage: `url(${restaurant?.coverImg})` }}>
         <div className=" bg-white w-3/12 py-8 pl-20">
@@ -83,7 +116,7 @@ export const RestaurantDetail = () => {
       </div>
       <div className="container flex flex-col items-end mt-20">
         <button
-          onClick={triggerCheckoutOrder}
+          onClick={openCheckoutModal}
           className="text-lg font-medium focus:outline-none text-white py-4 transition-colors bg-lime-600 hover:bg-lime-700 px-10"
         >
           Checkout Order

@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { gql, getFragmentData } from "../../__generated__";
 import { useApolloClient, useLazyQuery, useMutation } from "@apollo/client";
 import { Helmet } from "react-helmet-async";
-import { useFieldArray, useForm, Control, UseFormRegister, FieldErrors, useWatch } from "react-hook-form";
+import { useFieldArray, useForm, Control, UseFormRegister, FieldErrors } from "react-hook-form";
 import { Button } from "../../components/button";
 import { MY_RESTAURANT } from "./my-restaurant";
 import { DishOptionInputType, DishPartsFragment } from "../../__generated__/graphql";
@@ -72,14 +72,18 @@ const Choice = ({
 }) => {
   const { fields, append, remove, replace } = useFieldArray({
     control,
-    name: "options.${index}.choices" as "options.0.choices",
+    name: `options.${optionIndex}.choices` as "options.0.choices",
   });
   const onAddChoiceClick = () => {
     append({ name: "" });
   };
   useEffect(() => {
     if (initialChoices && initialChoices.length > 0) {
-      replace(initialChoices);
+      replace(
+        initialChoices.map((choice) => {
+          return { name: choice.name, extra: choice.extra };
+        })
+      );
     }
   }, [initialChoices]);
 
