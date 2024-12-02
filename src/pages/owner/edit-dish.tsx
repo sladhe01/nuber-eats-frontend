@@ -32,7 +32,7 @@ const EDIT_DISH = gql(`
   }
 `);
 
-const GET_DISH = gql(`
+export const GET_DISH = gql(`
   query getDish ( $id: Float!) {
     getDish ( id: $id ) {
       ok

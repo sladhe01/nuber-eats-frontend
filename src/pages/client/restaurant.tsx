@@ -39,7 +39,7 @@ export interface IOption {
 }
 
 export interface IOrderItem {
-  dish: DishPartsFragment | undefined;
+  dishId: number;
   options?: IOption[];
 }
 
@@ -66,7 +66,6 @@ export const RestaurantDetail = () => {
   const closeCheckoutModal = () => {
     setIsCheckoutModalVisible(false);
   };
-  const { register, handleSubmit, getValues, reset } = useForm<IFormOrderItem>({ mode: "onTouched" });
 
   useEffect(() => {
     if (isOptionModalVisible) {
@@ -81,9 +80,8 @@ export const RestaurantDetail = () => {
 
   //테스트용
   useEffect(() => {
-    console.log(orderItems);
+    console.log("orderItems", orderItems);
   }, [orderItems]);
-
   return (
     <div>
       <Helmet>
@@ -94,12 +92,9 @@ export const RestaurantDetail = () => {
         dish={selectedDish}
         setOrderItems={setOrderItems}
         onClose={closeOptionModal}
-        register={register}
-        getValues={getValues}
-        handleSubmit={handleSubmit}
-        reset={reset}
       />
       <CheckoutModal
+        restaurantId={+params.id}
         isVisible={isCheckoutModalVisible}
         onClose={closeCheckoutModal}
         orderItems={orderItems}

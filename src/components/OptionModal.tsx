@@ -1,29 +1,23 @@
-import React from "react";
 import { DishOption, DishPartsFragment } from "../__generated__/graphql";
 import { IFormOrderItem, IOption, IOrderItem } from "../pages/client/restaurant";
-import { UseFormGetValues, UseFormHandleSubmit, UseFormRegister, UseFormReset } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { FormError } from "./form-error";
 
 interface IProps {
   isVisible: boolean;
   onClose: () => void;
   dish: DishPartsFragment | undefined;
   setOrderItems: React.Dispatch<React.SetStateAction<IOrderItem[]>>;
-  register: UseFormRegister<IFormOrderItem>;
-  getValues: UseFormGetValues<IFormOrderItem>;
-  handleSubmit: UseFormHandleSubmit<IFormOrderItem, undefined>;
-  reset: UseFormReset<IFormOrderItem>;
 }
 
-export const OptionModal: React.FC<IProps> = ({
-  isVisible,
-  onClose,
-  dish,
-  setOrderItems,
-  register,
-  getValues,
-  handleSubmit,
-  reset,
-}) => {
+export const OptionModal: React.FC<IProps> = ({ isVisible, onClose, dish, setOrderItems }) => {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    reset,
+    formState: { errors },
+  } = useForm<IFormOrderItem>({ mode: "onSubmit", reValidateMode: "onChange" });
   const filterSelectedChoices = (
     options?: DishOption[] | null,
     indexPairs?: [optionIndex: number, choiceIndex: number][]
@@ -54,7 +48,6 @@ export const OptionModal: React.FC<IProps> = ({
     );
     return filteredOptions.map((filteredOption) => filteredOption.option);
   };
-
   const onSubmit = () => {
     const stringifiedIndexPairs = getValues("optionIndex_choiceIndex")
       ? `[${getValues("optionIndex_choiceIndex")}]`
@@ -62,11 +55,12 @@ export const OptionModal: React.FC<IProps> = ({
     const parsedIndexPairs = stringifiedIndexPairs ? JSON.parse(stringifiedIndexPairs) : undefined;
     const orderOption = filterSelectedChoices(dish?.options, parsedIndexPairs);
     setOrderItems((prev) => {
-      return [...prev, { dish, options: orderOption }];
+      return [...prev, { dishId: dish?.id!, options: orderOption }];
     });
     onClose();
     reset();
   };
+
   if (!isVisible) {
     return null;
   }
@@ -77,7 +71,13 @@ export const OptionModal: React.FC<IProps> = ({
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="sticky top-0 z-10 bg-white">
-          <button onClick={onClose} className="px-2 mt-3 ml-2">
+          <button
+            onClick={() => {
+              onClose();
+              reset();
+            }}
+            className="px-2 mt-3 ml-2"
+          >
             X
           </button>
         </div>
@@ -114,13 +114,43 @@ export const OptionModal: React.FC<IProps> = ({
                             <input
                               type="checkbox"
                               value={JSON.stringify([index, i])}
-                              {...register("optionIndex_choiceIndex")}
+                              {...register("optionIndex_choiceIndex", {
+                                validate: (_, formValue) => {
+                                  if (option.required) {
+                                    if (typeof formValue.optionIndex_choiceIndex === "string") {
+                                      return JSON.parse(formValue.optionIndex_choiceIndex)[0] === index;
+                                    } else if (typeof formValue.optionIndex_choiceIndex === "object") {
+                                      return Boolean(
+                                        formValue.optionIndex_choiceIndex?.find((indexPair) => {
+                                          return JSON.parse(indexPair)[0] === index;
+                                        })
+                                      );
+                                    }
+                                  }
+                                  return true;
+                                },
+                              })}
                             />
                           ) : (
                             <input
                               type="radio"
                               value={JSON.stringify([index, i])}
-                              {...register("optionIndex_choiceIndex")}
+                              {...register("optionIndex_choiceIndex", {
+                                validate: (_, formValue) => {
+                                  if (option.required) {
+                                    if (typeof formValue.optionIndex_choiceIndex === "string") {
+                                      return JSON.parse(formValue.optionIndex_choiceIndex)[0] === index;
+                                    } else if (typeof formValue.optionIndex_choiceIndex === "object") {
+                                      return Boolean(
+                                        formValue.optionIndex_choiceIndex?.find((indexPair) => {
+                                          return JSON.parse(indexPair)[0] === index;
+                                        })
+                                      );
+                                    }
+                                  }
+                                  return true;
+                                },
+                              })}
                             />
                           )}
                         </div>
@@ -132,8 +162,11 @@ export const OptionModal: React.FC<IProps> = ({
             )}
           </div>
         </div>
-        <div className="sticky bottom-0 flex justify-end z-10 bg-white">
-          <button type="submit" className="px-2 py-1 mr-3 my-3 bg-lime-500">
+        <div className="sticky bottom-0 flex justify-end items-center z-10 bg-white">
+          {errors.optionIndex_choiceIndex?.type === "validate" && (
+            <FormError errorMessage="Please choose required option" />
+          )}
+          <button type="submit" className="px-2 py-1 mr-3 my-3 ml-3 bg-lime-500 hover:bg-green-500 ">
             Add Orders
           </button>
         </div>
